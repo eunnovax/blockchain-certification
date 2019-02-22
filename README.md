@@ -1,5 +1,6 @@
 Create certificates and authenticate them on Ethereum blockchain.
-This is a front-end distributed application. There is a Sails.js backend of the dapp in the different repository.
+This is a front-end distributed application. There is a Sails.js backend of the dapp in the different repository:
+https://github.com/eunnovax/blockchain-certificate-backend
 
 Certification dapp operates the following way:
 1. Creates a certificate
