@@ -16,7 +16,7 @@ const HDWalletProvider = require('truffle-hdwallet-provider');
 
 
 var mnemonic =
-  "brown grit awful puppy crouch picnic annual street also rich business marriage";
+  "12 WORDS PROVIDED BY METAMASK";
 
 module.exports = {
   networks: {
@@ -30,7 +30,7 @@ module.exports = {
       provider: function() {
         return new HDWalletProvider(
           mnemonic,
-          'https://ropsten.infura.io/v3/519cb9af0a8c492db7f79f4605059a74'
+          'https://ropsten.infura.io/v3/<INFURA API>'
         )
       },
       gas: 5000000,
