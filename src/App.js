@@ -108,21 +108,22 @@ class App extends Component {
     var year = document.getElementById('year').value;
     var qualification = document.getElementById('qualification').value;
 
-    var certificat = {
-      name1: name1,
-      subject: subject,
-      year: year,
-      qualification: qualification
-    }
-          console.log(certificat, "_________certificat");
+    // var certificat = {
+    //   id: id,
+    //   name1: name1,
+    //   subject: subject,
+    //   year: year,
+    //   qualification: qualification
+    // }
+    //       console.log(certificat, "_________certificat");
 
-    axios.post('http://localhost:1337/certificate/create', certificat)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    }); 
+    // axios.post('http://localhost:1337/certificate/create', certificat)
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // }); 
 
     const message = this.state.web3.sha3( name1 + subject + year + qualification );
     console.log('message', message);
@@ -130,7 +131,7 @@ class App extends Component {
  
     
 
-    this.state.web3.eth.sign(this.state.account, message, function(err,result) {
+    this.state.web3.eth.sign(that.state.account, message, function(err,result) {
         console.log('signature after web3 sign', result)
         console.log(err, result)
         //document.getElementById('form').trigger('reset')
@@ -146,7 +147,7 @@ class App extends Component {
       //const counter = this.verificationInstance.setSign(this.state.signature, {from: this.state.account}); 
       //console.log('counter', counter);
       //return counter;
-        this.verificationInstance.setSign(this.state.signature, {from: this.state.account})
+        this.verificationInstance.setSign(that.state.signature, {from: this.state.account})
           .then((result) => {
            console.log('certificateCount result', result);
            return this.verificationInstance.certificateCount();
@@ -172,7 +173,25 @@ class App extends Component {
           //console.log('certificateCount from blockchain',that.state);
           //that.setState({signa: certificate[1]});
           console.log('signature from blockchain', that.state.web3.toHex( certificate[1]));
+          return id;
           })
+          .then(function(id) {
+            var certificat = {
+            iden: id,  
+            name1: name1,
+            subject: subject,
+            year: year,
+            qualification: qualification
+          }
+          console.log(certificat, "_________certificat");
+          return axios.post('http://localhost:1337/certificate/create', certificat);
+          })
+          .then(function (response) {
+            console.log('mysql certificate', response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          }); 
           //$('#storage').show();
           //$("#content").show();
           //$("#loader").hide();
@@ -365,6 +384,7 @@ class App extends Component {
               <h2>Sign a Document</h2>
               <p>Sign a document from your account with the form below and broadcast it to the blockchain!</p>
               <form onSubmit={this.signMessage} className="" role="form">
+                
                 <div className="form-group">
                   <input id="name1" className="form-control" type="text" name="name1"></input>
                 </div>
